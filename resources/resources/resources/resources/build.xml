@@ -1,0 +1,74 @@
+<project name="Supersoftware" default="info">
+    
+    <description>
+This is build file for the ${ant.project.name} project.
+    </description>
+
+    <!-- Prepares temporary folder structure -->
+    <target name="prepare">
+        <mkdir dir="tmp/dist" />
+        <mkdir dir="tmp/classes" />
+        <mkdir dir="tmp/javadoc" />
+        <mkdir dir="tmp/test" />
+    </target>
+
+    <!-- Deletes temporary folders -->
+    <target name="clean" description="Cleans temporary files.">
+        <delete dir="tmp" failonerror="false" includeemptydirs="true" />
+    </target>    
+    
+    <!-- Displays information about the project. -->
+    <target name="info">
+<echo>
+This is build file for the ${ant.project.name}.
+(c) 2004, Poznan University of Technology
+
+Use: ant -projectinfo
+For more information regarding the targets.
+</echo>
+    </target>
+    
+    <!-- Compiles source files. -->
+    <target name="compile" depends="prepare" description="Compiles source files.">
+        <javac destdir="tmp/classes"
+               encoding="UTF-8" failonerror="true"
+               includeantruntime="false" includejavaruntime="false">
+               <src location="src/java" />
+        </javac>
+        <javac destdir="tmp/test"
+               encoding="UTF-8" failonerror="true"
+               includeantruntime="false" includejavaruntime="false">
+               <src location="src/test" />
+               <classpath>
+                    <path location="lib/junit.jar" />
+                    <path location="lib/junit-addons-1.4.jar" />
+                    <path location="tmp/classes" />
+               </classpath>
+        </javac>
+    </target>
+	
+	<copy todir="./resources" description = "copying resources">
+		<fileset dir = "C:\Users\student\Downloads\project-base-Eclipse\project-base">
+			<exclude name = "**/*.java"/>
+		</fileset>
+	</copy>
+	
+	<javadoc packagenames="com.dweiss.utils.*"
+	         sourcepath="src"
+	         
+	         defaultexcludes="yes"
+	         destdir="docs/api"
+	         author="true"
+	         version="true"
+	         use="true"
+	         windowtitle="Test API">
+	  <doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
+	  <bottom><![CDATA[<i>Copyright &#169; 2000 Dummy Corp. All Rights Reserved.</i>]]></bottom>
+	  <tag name="todo" scope="all" description="To do:"/>
+	  <group title="Group 1 Packages" packages="com.dweiss.utils.*"/>
+	  <link offline="true" href="https://docs.oracle.com/javase/8/docs/api/" packagelistLoc="C:\tmp"/>
+	  <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+	</javadoc>
+
+</project>
+
